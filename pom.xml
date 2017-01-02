@@ -12,27 +12,6 @@
   <build>
       <finalName>managing-movie-theater-app</finalName>
         <plugins>
-        <plugin>
-    			<artifactId>maven-resources-plugin</artifactId>
-    				<executions>
-        				<execution>
-            				<id>copy-spring-configurations</id>
-           					<phase>process-resources</phase>
-            					<goals>
-                 					<goal>copy-resources</goal>
-           						 </goals>
-            						<configuration>
-                						<overwrite>true</overwrite>
-                							<outputDirectory>${basedir}/target/classes/conf</outputDirectory>
-                								<resources>
-                    								<resource>
-                        								<directory>src/main/conf</directory>
-                    								</resource>
-                								</resources>
-            						</configuration>
-        				</execution>
-    				</executions>
-			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
