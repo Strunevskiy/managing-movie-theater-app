@@ -80,7 +80,11 @@ public class Ticket extends DomainObject implements Comparable<Ticket>, Serializ
         return seat;
     }
     
-    public double getTicketPrice() {
+    public void setSeat(long seat) {
+		this.seat = seat;
+	}
+
+	public double getTicketPrice() {
 		return ticketPrice;
 	}
 

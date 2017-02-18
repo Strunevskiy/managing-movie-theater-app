@@ -20,6 +20,7 @@ import com.epam.spring.core.domain.Event;
 import com.epam.spring.core.domain.Ticket;
 import com.epam.spring.core.service.IBookingService;
 import com.epam.spring.core.web.beans.UserEventBean;
+import com.epam.spring.core.web.view.TicketsPdfView;
 
 @Controller
 @RequestMapping("/ticket")
@@ -42,25 +43,38 @@ public class TicketController {
 		return actionView;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView getPurchasedTicketsForEvent(
-			@RequestParam long eventId, 
-			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) String date) 
+	@RequestMapping(method = RequestMethod.GET, produces = "application/pdf")
+	public ModelAndView getPurchasedTicketsForEventPdf(
+			@RequestParam(required = false) long eventId, 
+			@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) String date) 
 	{
 		Event event = new Event();
 		event.setId(eventId);
 		Set<Ticket> purchasedTickets = bookingService.getPurchasedTicketsForEvent(event, DateTime.parse(date).toDate());
+		
+		Ticket ticket1 = new Ticket();
+		ticket1.setId(1l);
+		ticket1.setSeat(1l);
+		ticket1.setTicketPrice(20l);
+		purchasedTickets.add(ticket1);
+		
+		Ticket ticket2 = new Ticket();
+		ticket2.setId(2l);
+		ticket2.setSeat(2l);
+		ticket2.setTicketPrice(30l);
+		purchasedTickets.add(ticket2);
 
 		ModelAndView actionView = new ModelAndView(TICKETS_VIEW);
 		actionView.addObject("entity", "tickets");
 		actionView.addObject("tickets", purchasedTickets);
+		actionView.setView(new TicketsPdfView());
 		return actionView;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, headers = "Accept = application/pdf")
-	public ModelAndView getPurchasedTicketsForEventPdf(
-			@RequestParam long eventId, 
-			@RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) String date) 
+	@RequestMapping(method = RequestMethod.GET, produces = "!application/pdf")
+	public ModelAndView getPurchasedTicketsForEvent(
+			@RequestParam(required = false) long eventId, 
+			@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE_TIME) String date) 
 	{
 		Event event = new Event();
 		event.setId(eventId);
