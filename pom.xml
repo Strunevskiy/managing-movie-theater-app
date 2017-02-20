@@ -180,8 +180,8 @@
   		
   		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet}</version>
 			<scope>provided</scope>
 		</dependency>
 		
@@ -243,6 +243,12 @@
    			<groupId>com.itextpdf</groupId>
     		<artifactId>itextpdf</artifactId>
     		<version>5.5.10</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.mockito</groupId>
+    		<artifactId>mockito-all</artifactId>
+    		<version>1.9.5</version>
 		</dependency>
 			
 	</dependencies>
