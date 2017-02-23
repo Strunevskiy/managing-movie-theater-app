@@ -14,7 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.epam.spring.core.app.AppConfig;
-import com.epam.spring.core.domain.User;
+import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.IUserService;
 
 @ContextConfiguration(classes = { AppConfig.class }, loader = AnnotationConfigContextLoader.class)

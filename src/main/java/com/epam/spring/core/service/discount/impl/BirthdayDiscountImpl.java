@@ -6,7 +6,7 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.User;
+import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.discount.IDiscount;
 
 /**

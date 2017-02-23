@@ -3,7 +3,7 @@ package com.epam.spring.core.service.discount.impl;
 import java.util.Date;
 
 import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.User;
+import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.discount.IDiscount;
 
 /**

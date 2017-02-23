@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.User;
+import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.IEventService;
 import com.epam.spring.core.service.IUserService;
 import com.google.gson.Gson;

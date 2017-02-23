@@ -82,6 +82,7 @@
   
   <properties>
 			<spring.version>4.0.0.RELEASE</spring.version>
+			<springsecurity.version>4.0.0.RELEASE</springsecurity.version>
    			<jackson.version>2.5.5</jackson.version>
    			<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>   
    			<aspectj.version>1.8.9</aspectj.version>
@@ -132,6 +133,17 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>${spring.data}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${springsecurity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${springsecurity.version}</version>
         </dependency>
  
         <dependency>

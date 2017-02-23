@@ -1,9 +1,9 @@
-package com.epam.spring.core.dao;
+package com.epam.spring.core.dao.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.epam.spring.core.domain.User;
+import com.epam.spring.core.domain.user.User;
 
 /**
  * @author alehstruneuski

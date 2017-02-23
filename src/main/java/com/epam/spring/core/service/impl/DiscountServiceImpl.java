@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.User;
+import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.IDiscountService;
 import com.epam.spring.core.service.IUserService;
 import com.epam.spring.core.service.discount.IDiscount;

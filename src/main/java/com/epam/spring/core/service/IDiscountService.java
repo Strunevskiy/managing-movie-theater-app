@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.User;
+import com.epam.spring.core.domain.user.User;
 
 /**
  * @author alehstruneuski

@@ -1,7 +1,7 @@
 package com.epam.spring.core.web.beans;
 
 import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.User;
+import com.epam.spring.core.domain.user.User;
 
 public class UserEventBean {
 	

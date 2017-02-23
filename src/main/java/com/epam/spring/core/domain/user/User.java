@@ -1,4 +1,4 @@
-package com.epam.spring.core.domain;
+package com.epam.spring.core.domain.user;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,9 @@ import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.epam.spring.core.domain.DomainObject;
+import com.epam.spring.core.domain.Ticket;
 
 /**
  * @author alehstruneuski
@@ -41,6 +45,9 @@ public class User extends DomainObject implements Serializable {
 	@Column(name = "email")
     private String email;
 	
+	@Column(name = "password")
+    private String password;
+	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "birthday")
@@ -49,6 +56,10 @@ public class User extends DomainObject implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private Set<Ticket> tickets = new HashSet<>();
+	
+	@Column
+	@Convert(converter = RoleSetConverter.class)
+	private Set<Role> roles;
 	
 	@Transient
     private boolean isRegistered;
@@ -80,6 +91,14 @@ public class User extends DomainObject implements Serializable {
         this.email = email;
     }
     
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+    
 	public boolean isRegistered() {
 		return isRegistered;
 	}
@@ -103,9 +122,16 @@ public class User extends DomainObject implements Serializable {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	
-	
-	 @Override
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	@Override
 	public int hashCode() {
 		 return Objects.hash(getId(), firstName, lastName, email, birthday);
 	}

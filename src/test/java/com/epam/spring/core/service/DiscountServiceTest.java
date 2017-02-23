@@ -21,7 +21,7 @@ import com.epam.spring.core.app.AppConfig;
 import com.epam.spring.core.domain.Auditorium;
 import com.epam.spring.core.domain.Event;
 import com.epam.spring.core.domain.EventRating;
-import com.epam.spring.core.domain.User;
+import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.IDiscountService;
 import com.epam.spring.core.service.IEventService;
 import com.epam.spring.core.service.IUserService;

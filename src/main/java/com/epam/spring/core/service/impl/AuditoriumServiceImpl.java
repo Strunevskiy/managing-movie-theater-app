@@ -9,7 +9,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.spring.core.dao.AuditoriumRepository;
+import com.epam.spring.core.dao.repository.AuditoriumRepository;
 import com.epam.spring.core.domain.Auditorium;
 import com.epam.spring.core.service.IAuditoriumService;
 

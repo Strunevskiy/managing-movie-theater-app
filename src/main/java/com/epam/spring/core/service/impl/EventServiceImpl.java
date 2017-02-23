@@ -8,7 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.epam.spring.core.dao.EventRepository;
+import com.epam.spring.core.dao.repository.EventRepository;
 import com.epam.spring.core.domain.Event;
 import com.epam.spring.core.service.IEventService;
 
