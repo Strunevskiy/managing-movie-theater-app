@@ -11,13 +11,14 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import com.epam.spring.core.app.configs.DataAccessConfig;
+import com.epam.spring.core.app.configs.SecurityConfiguration;
 import com.epam.spring.core.service.discount.IDiscount;
 import com.epam.spring.core.service.discount.impl.BirthdayDiscountImpl;
 import com.epam.spring.core.service.discount.impl.LuckyDiscountStrategyImpl;
 
 @Configuration
 @ComponentScan("com.epam.spring.core")
-@Import(DataAccessConfig.class)
+@Import({ DataAccessConfig.class, SecurityConfiguration.class })
 @EnableAspectJAutoProxy
 public class AppConfig {
 	  

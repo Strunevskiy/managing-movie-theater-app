@@ -2,11 +2,13 @@
    {  
       "firstName":"Oleg",
       "lastName":"Struneuski",
-      "email":"aleh_struneuski@epam.com"
+      "email":"aleh_struneuski@epam.com",
+      "password": "1234"
    },
    {  
       "firstName":"Aleh",
       "lastName":"Strunevskiy",
-      "email":"oleg_struneuski@epam.com"
+      "email":"oleg_struneuski@epam.com",
+      "password": "1234567"
    }
 ]

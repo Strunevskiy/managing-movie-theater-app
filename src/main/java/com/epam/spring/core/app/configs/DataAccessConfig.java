@@ -58,10 +58,10 @@ public class DataAccessConfig {
 		entityManagerFactoryBean.setDataSource(dataSource());
 		entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 		entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty(PROP_ENTITYMANAGER_PACKAGES_TO_SCAN));
-		entityManagerFactoryBean.setJpaProperties(getHibernateProperties());	        
-		return entityManagerFactoryBean;
-	 }
-	  
+		entityManagerFactoryBean.setJpaProperties(getHibernateProperties());	
+		return entityManagerFactoryBean; 
+	}
+	
 	@Bean
 	public JpaTransactionManager transactionManager() {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();

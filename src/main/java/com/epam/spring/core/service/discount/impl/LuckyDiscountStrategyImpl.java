@@ -3,6 +3,7 @@ package com.epam.spring.core.service.discount.impl;
 import java.util.Date;
 
 import com.epam.spring.core.domain.Event;
+import com.epam.spring.core.domain.user.Role;
 import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.discount.IDiscount;
 
@@ -16,7 +17,7 @@ public class LuckyDiscountStrategyImpl implements IDiscount {
 
 	@Override
 	public double getDiscount(User user, Event event, Date airDateTime, long numberOfTickets) {
-		if (user.isRegistered()) {
+		if (user.getRoles().contains(Role.RESGISTERED_USER)) {
 			return numberOfTickets % EACH_TH_TICKET == 0 ? LUCKY_DISCOUNT : 0;
 		} else {
 			long numberOfUserTickets = user.getTickets().size() + numberOfTickets;

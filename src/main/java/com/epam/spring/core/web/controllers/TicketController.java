@@ -50,7 +50,7 @@ public class TicketController {
 	{
 		Event event = new Event();
 		event.setId(eventId);
-		Set<Ticket> purchasedTickets = bookingService.getPurchasedTicketsForEvent(event, DateTime.parse(date).toDate());
+		Set<Ticket> purchasedTickets = new HashSet<>();//bookingService.getPurchasedTicketsForEvent(event, DateTime.parse(date).toDate());
 		
 		Ticket ticket1 = new Ticket();
 		ticket1.setId(1l);

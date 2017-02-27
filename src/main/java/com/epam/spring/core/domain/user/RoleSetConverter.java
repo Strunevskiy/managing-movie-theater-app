@@ -10,7 +10,7 @@ import javax.persistence.Converter;
 
 import org.apache.commons.lang.StringUtils;
 
-@Converter
+@Converter(autoApply = true)
 public class RoleSetConverter implements AttributeConverter<Set<Role>, String> {	
 	
 	private static final String SEPERATOR = ",";

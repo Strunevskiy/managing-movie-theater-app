@@ -41,7 +41,6 @@ public class DiscountServiceImpl implements IDiscountService {
 
 	private User checkIfRegisteredUser(User userFromDB, User passeUser) {
 		if (userFromDB != null) {
-			userFromDB.setRegistered(true);
 			return userFromDB;
 		}
 		return passeUser;

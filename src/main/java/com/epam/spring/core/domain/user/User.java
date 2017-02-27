@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -29,6 +28,7 @@ import com.epam.spring.core.domain.Ticket;
  */
 @Entity
 @Table(name = "user")
+@Convert( attributeName = "roles", converter = RoleSetConverter.class )
 public class User extends DomainObject implements Serializable {
 
 	/**
@@ -56,13 +56,9 @@ public class User extends DomainObject implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private Set<Ticket> tickets = new HashSet<>();
-	
-	@Column
-	@Convert(converter = RoleSetConverter.class)
-	private Set<Role> roles;
-	
-	@Transient
-    private boolean isRegistered;
+
+	@Column(name = "roles")
+	private Set<Role> roles = new HashSet<>();
 	
     public User() {
     }
@@ -97,14 +93,6 @@ public class User extends DomainObject implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-    
-	public boolean isRegistered() {
-		return isRegistered;
-	}
-
-	public void setRegistered(boolean isRegistered) {
-		this.isRegistered = isRegistered;
 	}
 
     public Set<Ticket> getTickets() {

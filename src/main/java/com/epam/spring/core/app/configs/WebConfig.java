@@ -9,6 +9,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
@@ -20,6 +21,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 @ComponentScan(basePackages = {"com.epam.spring.core.web", "com.epam.spring.core.web.exception"})
 public class WebConfig extends WebMvcConfigurerAdapter {
+	  
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations("/static/");  
+	}
 	
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {		  

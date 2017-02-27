@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -24,7 +25,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
- 
     @Autowired
     private PersistentTokenRepository tokenRepository;
  
@@ -37,12 +37,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-        .antMatchers("/**").access("hasRole('RESGISTERED_USER') or hasRole('BOOKING_MANAGER')")
-        .antMatchers("/ticket/**").access("hasRole('BOOKING_MANAGER')").and()
-        .formLogin().loginPage("/login")
-        .loginProcessingUrl("/login").usernameParameter("email").passwordParameter("password").and()
-        .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-        .tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+        .antMatchers("/static/**").permitAll()
+        .antMatchers("/upload/**").permitAll()
+        .antMatchers("/ticket/**").hasRole("BOOKING_MANAGER")
+        .antMatchers("/**").hasAnyRole("BOOKING_MANAGER", "RESGISTERED_USER")
+        .anyRequest().authenticated().and()
+        .formLogin().permitAll()
+        .loginPage("/login")
+        .defaultSuccessUrl("/")
+        .usernameParameter("email").passwordParameter("password")
+        .and()
+        .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository).tokenValiditySeconds(86400).and()
+        .logout().permitAll()                                                                
+		.deleteCookies(AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY, "JSESSIONID")
+		.invalidateHttpSession(true).and()
+        .csrf().disable()
+        .exceptionHandling().accessDeniedPage("/access_denied");
     }
  
     @Bean

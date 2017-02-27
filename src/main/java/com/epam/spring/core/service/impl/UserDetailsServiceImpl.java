@@ -26,11 +26,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {		   
-		User user = userService.getUserByEmail(email);	        
-		//logger.info("User : {}", user);
-	        
+		User user = userService.getUserByEmail(email);	        	        
 		if (user == null){
-			//logger.info("User not found");
 			throw new UsernameNotFoundException("User was not found by userId");
 		}
 		return new org.springframework.security.core.userdetails.User(String.valueOf(user.getId()), user.getPassword(), 
@@ -40,10 +37,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 private List<GrantedAuthority> getGrantedAuthorities(User user){
 		 List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();	         
 		 for(Role userRole : user.getRoles()){
-			 //logger.info("UserProfile : {}", userProfile);
 			 authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole.getRole()));     
 		 }
-		 //logger.info("authorities : {}", authorities);
 		 return authorities;
 	 }
 
