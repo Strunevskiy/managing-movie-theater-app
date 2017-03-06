@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.Ticket;
+import com.epam.spring.core.domain.ticket.Ticket;
 import com.epam.spring.core.domain.user.User;
 
 /**
@@ -52,5 +52,7 @@ public interface IBookingService {
      * @return set of all purchased tickets
      */
     public @Nonnull Set<Ticket> getPurchasedTicketsForEvent(@Nonnull Event event, @Nonnull Date dateTime);
+    
+    public void refillingAccount(User user, double money);
 
 }

@@ -1,0 +1,12 @@
+[  
+   {  
+      "user": {
+      		"email":"aleh_struneuski@epam.com"
+      },
+      "event": {  
+      		"name":"Oleg's company"
+      },
+      "seat": 8,
+      "date": 1482241950000
+   }
+]

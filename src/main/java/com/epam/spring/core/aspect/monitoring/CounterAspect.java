@@ -4,23 +4,24 @@ import java.util.Set;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
+import com.epam.spring.core.dao.repository.EventRepository;
 import com.epam.spring.core.dao.statistics.ICounterAspectDao;
 import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.Ticket;
 import com.epam.spring.core.domain.statistics.CounterStatisticsEvent;
+import com.epam.spring.core.domain.ticket.Ticket;
 
 /**
  * @author alehstruneuski
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class CounterAspect {
 
+	@Autowired
+	private EventRepository eventRepository;
 	@Autowired
 	private ICounterAspectDao counterAspectDao;
 	
@@ -29,7 +30,8 @@ public class CounterAspect {
 	public void accessEventByBookedTickets(JoinPoint joinPoint) {
 		Set<Ticket> tickets = (Set<Ticket>) joinPoint.getArgs()[0];
 		for (Ticket ticket : tickets) { 
-			Long id = ticket.getEvent().getId();
+			Event event = eventRepository.findByName(ticket.getEvent().getName());
+			Long id = event.getId();
 		  	CounterStatisticsEvent counterStatisticsEvent = counterAspectDao.getStatisticsById(id);
 		  	if (counterStatisticsEvent != null) {
 		  		counterStatisticsEvent.increaseNumberOfAccessBookedTickets();

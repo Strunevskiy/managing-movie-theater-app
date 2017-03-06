@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -15,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.epam.spring.core.domain.ticket.Ticket;
 
 /**
  * @author alehstruneuski
@@ -34,7 +37,7 @@ public class Auditorium extends DomainObject {
     private long numberOfSeats;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	@OneToMany(mappedBy = "auditorium")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "auditorium")
 	private Set<Ticket> tickets;
     @ElementCollection
     @CollectionTable(name = "vip_seats", joinColumns = @JoinColumn(name = "auditorium_id"))

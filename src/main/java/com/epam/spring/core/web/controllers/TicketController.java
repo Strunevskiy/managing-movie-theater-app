@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.Ticket;
+import com.epam.spring.core.domain.ticket.Ticket;
 import com.epam.spring.core.service.IBookingService;
 import com.epam.spring.core.web.beans.UserEventBean;
 import com.epam.spring.core.web.view.TicketsPdfView;
@@ -50,19 +50,7 @@ public class TicketController {
 	{
 		Event event = new Event();
 		event.setId(eventId);
-		Set<Ticket> purchasedTickets = new HashSet<>();//bookingService.getPurchasedTicketsForEvent(event, DateTime.parse(date).toDate());
-		
-		Ticket ticket1 = new Ticket();
-		ticket1.setId(1l);
-		ticket1.setSeat(1l);
-		ticket1.setTicketPrice(20l);
-		purchasedTickets.add(ticket1);
-		
-		Ticket ticket2 = new Ticket();
-		ticket2.setId(2l);
-		ticket2.setSeat(2l);
-		ticket2.setTicketPrice(30l);
-		purchasedTickets.add(ticket2);
+		Set<Ticket> purchasedTickets = bookingService.getPurchasedTicketsForEvent(event, DateTime.parse(date).toDate());
 
 		ModelAndView actionView = new ModelAndView(TICKETS_VIEW);
 		actionView.addObject("entity", "tickets");

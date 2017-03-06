@@ -9,7 +9,7 @@ import com.epam.spring.core.domain.user.User;
  * @author alehstruneuski
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{	
+public interface UserRepository extends JpaRepository<User, Long> {	
 
 	public User findByEmail(String email);
 

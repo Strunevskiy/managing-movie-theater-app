@@ -5,16 +5,14 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
 
-import com.epam.spring.core.domain.Ticket;
+import com.epam.spring.core.domain.ticket.Ticket;
 
 /**
  * @author alehstruneuski
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LuckyWinnerAspect {
 
     @SuppressWarnings("unchecked")

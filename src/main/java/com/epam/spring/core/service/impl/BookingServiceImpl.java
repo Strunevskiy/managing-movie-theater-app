@@ -1,21 +1,30 @@
 package com.epam.spring.core.service.impl;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.epam.spring.core.domain.Auditorium;
 import com.epam.spring.core.domain.Event;
 import com.epam.spring.core.domain.EventRating;
-import com.epam.spring.core.domain.Ticket;
+import com.epam.spring.core.domain.UserAccount;
+import com.epam.spring.core.domain.ticket.Ticket;
 import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.IAuditoriumService;
 import com.epam.spring.core.service.IBookingService;
 import com.epam.spring.core.service.IDiscountService;
 import com.epam.spring.core.service.IEventService;
+import com.epam.spring.core.service.IUserAccountService;
 import com.epam.spring.core.service.IUserService;
 
 /**
@@ -35,6 +44,16 @@ public class BookingServiceImpl implements IBookingService {
 	private IEventService eventService;
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private IUserAccountService userAccountService;
+	
+	@Override
+	public void refillingAccount(User user, double money) {
+		UserAccount userAccount = userAccountService.getById(user.getId());
+		BigDecimal balance = userAccount.getMoneyAmount().add(new BigDecimal(money));
+		userAccount.setMoneyAmount(balance);
+		userAccountService.save(userAccount);
+	}
 	
 	@Override
 	public double getTicketsPrice(Event event, Date dateTime, User user, Set<Long> seats) {	
@@ -61,21 +80,29 @@ public class BookingServiceImpl implements IBookingService {
 		return totalPrice;
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void bookTickets(Set<Ticket> tickets) {		
-		for (Ticket ticket : tickets) {
-			Long eventId = ticket.getEvent().getId();
-			Event event = eventService.getById(eventId);
-			event.getAuditoriums().get(ticket.getDate()).addTicket(ticket);
-			
-			User userOfTicket = ticket.getUser();
-			Long userId = userOfTicket.getId();
-			
-			if (userService.getById(userId) != null) {
-				userOfTicket.getTickets().add(ticket);
-				userService.save(userOfTicket);
-			}
-		}		
+	public void bookTickets(Set<Ticket> tickets) {	
+		if (CollectionUtils.isEmpty(tickets)) {
+			throw new IllegalArgumentException();
+		}
+		
+		Ticket ticket = tickets.stream().findAny().get();
+		User ticketsOwner = ticket.getUser();
+		
+		boolean isAvlSeats = isAvailableSeats(tickets);
+		if (!isAvlSeats) {
+			throw new IllegalStateException();
+		}
+		
+		User user = userService.getUserByEmail(ticketsOwner.getEmail());					
+		UserAccount userAccount = userAccountService.getById(user.getId());
+		boolean isAvlMoney = isUserAccountHasEnoughMoney(userAccount, tickets);
+		if (!isAvlMoney) {
+			throw new IllegalStateException();
+		}
+		
+		withdrawMoneyUsertAccount(userAccount, tickets);		
 	}
 
 	@Override
@@ -84,6 +111,55 @@ public class BookingServiceImpl implements IBookingService {
 		Map<Date, Auditorium> auditoriums = choosenEvent.getAuditoriums();
 		Auditorium auditorium = auditoriums.get(dateTime);
 		return auditorium.getTickets();
+	}
+	
+	private boolean isAvailableSeats(Set<Ticket> tickets) {	
+		boolean isAvaliableSeats = true;
+		Iterator<Ticket> itr = tickets.iterator();
+		while (itr.hasNext()) {
+			Ticket ticket = itr.next();
+			String eventName = ticket.getEvent().getName();
+			Event event = eventService.getByName(eventName);
+			Auditorium auditorium = event.getAuditoriums().get(ticket.getDate());
+			Set<Long> seats = auditorium.getTickets().stream().map(Ticket::getSeat).collect(Collectors.toSet());
+			if (seats.contains(ticket.getSeat())) {
+				isAvaliableSeats = false;
+			}
+		}
+		return isAvaliableSeats;
+	}
+	
+	private boolean isUserAccountHasEnoughMoney(UserAccount userAccount, Set<Ticket> tickets) {
+		double total = 0.0d;
+		for (Ticket ticket : tickets) {
+			Event event = eventService.getByName(ticket.getEvent().getName());
+			total += event.getTicketPrice().doubleValue();	
+		}
+		int compareResult = new BigDecimal(total).compareTo(userAccount.getMoneyAmount()); 			
+		return Arrays.asList(-1, 0).contains(compareResult);		
+	}
+	
+	private void withdrawMoneyUsertAccount(UserAccount userAccount, Set<Ticket> tickets) {
+		
+		double total = 0.0d;
+		for (Ticket ticket : tickets) {
+			String eventName = ticket.getEvent().getName();
+			Event event = eventService.getByName(eventName);
+			Auditorium auditorium = event.getAuditoriums().get(ticket.getDate());
+			
+			total += event.getTicketPrice().doubleValue();
+			
+			User user = userService.getUserByEmail(ticket.getUser().getEmail());
+			if (user != null) {
+				ticket.setUser(user);
+				ticket.setAuditorium(auditorium);
+				ticket.setEvent(event);
+				user.getTickets().add(ticket);
+				userService.updateUser(user);
+			}
+		}	
+		userAccount.setMoneyAmount(userAccount.getMoneyAmount().subtract(new BigDecimal(total)));
+		userAccountService.save(userAccount);
 	}
 	
 }

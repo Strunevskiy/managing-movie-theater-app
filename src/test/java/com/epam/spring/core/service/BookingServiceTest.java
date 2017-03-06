@@ -20,7 +20,7 @@ import com.epam.spring.core.app.AppConfig;
 import com.epam.spring.core.domain.Auditorium;
 import com.epam.spring.core.domain.Event;
 import com.epam.spring.core.domain.EventRating;
-import com.epam.spring.core.domain.Ticket;
+import com.epam.spring.core.domain.ticket.Ticket;
 import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.IBookingService;
 

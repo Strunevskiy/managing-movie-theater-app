@@ -15,13 +15,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.epam.spring.core")
 @PropertySource("classpath:/application.properties")
-public class DataAccessConfig {
+public class DataAccessConfig implements TransactionManagementConfigurer {
 	
     private static final String PROP_NAME_DATABASE_DRIVER = "db.driver";
     private static final String PROP_NAME_DATABASE_URL = "db.url";
@@ -67,6 +69,11 @@ public class DataAccessConfig {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 		return transactionManager;
+	}
+
+	@Override
+	public PlatformTransactionManager annotationDrivenTransactionManager() {
+		return transactionManager();
 	}
 	
 	private Properties getHibernateProperties() {

@@ -47,7 +47,7 @@ public class AuditoriumServiceImpl implements IAuditoriumService {
 
 	@Override
 	public void remove(Auditorium auditorium) {
-		auditoriuRepository.delete(auditorium.getId());;
+		auditoriuRepository.delete(auditorium.getId());
 	}
 	
 }

@@ -1,9 +1,9 @@
-package com.epam.spring.core.domain;
+package com.epam.spring.core.domain.ticket;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,29 +13,33 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.epam.spring.core.domain.Auditorium;
+import com.epam.spring.core.domain.DomainObject;
+import com.epam.spring.core.domain.Event;
 import com.epam.spring.core.domain.user.User;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author alehstruneuski
  */
 @Entity
 @Table(name = "ticket")
-public class Ticket extends DomainObject implements Comparable<Ticket>, Serializable {
+public class Ticket extends DomainObject implements Comparable<Ticket> {
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 655028145987433327L;
 	
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_fk")
 	private User user;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="event_fk")
     private Event event;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="auditorium_fk")
     private Auditorium auditorium;
     
@@ -47,6 +51,7 @@ public class Ticket extends DomainObject implements Comparable<Ticket>, Serializ
 	
 	@Column(name = "date")
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonSerialize(using = JsonDateSerializer.class)
 	private Date date;
 	
 	@Transient
@@ -73,9 +78,17 @@ public class Ticket extends DomainObject implements Comparable<Ticket>, Serializ
     public User getUser() {
         return user;
     }
+    
+	public void setUser(User user) {
+		this.user = user;
+	}
 
     public Event getEvent() {
         return event;
+    }
+    
+    public void setEvent(Event event) {
+    	this.event = event;
     }
 
     public long getSeat() {
@@ -112,7 +125,7 @@ public class Ticket extends DomainObject implements Comparable<Ticket>, Serializ
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), user, event, auditorium, date, seat);
+		return Objects.hash(getId(), event, auditorium, date, seat);
 	}
 
 	@Override
@@ -143,11 +156,6 @@ public class Ticket extends DomainObject implements Comparable<Ticket>, Serializ
 			if (other.event != null)
 				return false;
 		} else if (!event.equals(other.event))
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
 			return false;
 		if (seat != other.seat)
 			return false;

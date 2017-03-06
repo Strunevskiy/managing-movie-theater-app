@@ -4,9 +4,7 @@ import java.util.Arrays;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.epam.spring.core.dao.statistics.IDiscountAspectDao;
 import com.epam.spring.core.domain.statistics.DiscountStatistics;
@@ -15,8 +13,8 @@ import com.epam.spring.core.domain.user.User;
 /**
  * @author alehstruneuski
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class DiscountAspect {
 	
 	private static final String LUCKY_DISCOUNT = "0.50";

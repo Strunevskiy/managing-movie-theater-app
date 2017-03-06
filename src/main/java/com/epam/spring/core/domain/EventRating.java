@@ -1,14 +1,12 @@
 package com.epam.spring.core.domain;
 
 /**
- * @author Yuriy_Tkach
+ * @author alehstruneuski
  */
 public enum EventRating {
 
     LOW,
-
     MID,
-
     HIGH;
 
 }

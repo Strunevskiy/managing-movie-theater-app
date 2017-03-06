@@ -1,5 +1,6 @@
 package com.epam.spring.core.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,6 +20,8 @@ import javax.persistence.MapKeyTemporal;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TemporalType;
+
+import com.epam.spring.core.domain.ticket.Ticket;
 
 /**
  * @author alehstruneuski
@@ -52,6 +55,9 @@ public class Event extends DomainObject {
     
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Ticket> tickets = new HashSet<>();
+	
+	@Column(name = "ticket_price", precision = 19, scale = 0)
+	private BigDecimal ticketPrice;
 
 	public void assignAuditorium(Date dateTime, Auditorium auditorium) {
     	auditoriums.put(dateTime, auditorium);
@@ -99,6 +105,14 @@ public class Event extends DomainObject {
 
 	public void setTickets(Set<Ticket> tickets) {
 		this.tickets = tickets;
+	}
+	
+	public BigDecimal getTicketPrice() {
+		return ticketPrice;
+	}
+
+	public void setTicketPrice(BigDecimal ticketPrice) {
+		this.ticketPrice = ticketPrice;
 	}
 
 	@Override

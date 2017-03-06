@@ -1,6 +1,5 @@
 package com.epam.spring.core.domain.user;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -13,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +21,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.epam.spring.core.domain.DomainObject;
-import com.epam.spring.core.domain.Ticket;
+import com.epam.spring.core.domain.UserAccount;
+import com.epam.spring.core.domain.ticket.Ticket;
 
 /**
  * @author alehstruneuski
@@ -29,7 +30,7 @@ import com.epam.spring.core.domain.Ticket;
 @Entity
 @Table(name = "user")
 @Convert( attributeName = "roles", converter = RoleSetConverter.class )
-public class User extends DomainObject implements Serializable {
+public class User extends DomainObject {
 
 	/**
 	 * 
@@ -59,8 +60,12 @@ public class User extends DomainObject implements Serializable {
 
 	@Column(name = "roles")
 	private Set<Role> roles = new HashSet<>();
-	
-    public User() {
+	 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_account_id")
+	private UserAccount userAccount;
+
+	public User() {
     }
 	
     public String getFirstName() {
@@ -117,6 +122,14 @@ public class User extends DomainObject implements Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	
+    public UserAccount getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
 	}
 
 	@Override
