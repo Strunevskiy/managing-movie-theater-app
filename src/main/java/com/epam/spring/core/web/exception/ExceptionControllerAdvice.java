@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-//@ControllerAdvice("com.epam.spring.core.web.controllers")
+@ControllerAdvice("com.epam.spring.core.web.controllers")
 public class ExceptionControllerAdvice {
 
 	
-	//@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Exception occured")
-	//@ExceptionHandler(Exception.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Exception occured")
+	@ExceptionHandler(Exception.class)
 	public ModelAndView expHandler(Exception e) {
 		ModelAndView errorView = new ModelAndView("error_view");
 		errorView.addObject("message",  e.getMessage());

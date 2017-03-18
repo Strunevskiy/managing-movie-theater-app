@@ -8,10 +8,7 @@
 
 package com.epam.spring.core.soap.bean.event.jaxb;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 import com.epam.spring.core.soap.bean.event.GetEventByIdRequest;
 import com.epam.spring.core.soap.bean.event.GetEventByIdResponse;
@@ -21,9 +18,6 @@ import com.epam.spring.core.soap.bean.event.GetEventsRequest;
 import com.epam.spring.core.soap.bean.event.GetEventsResponse;
 import com.epam.spring.core.soap.bean.event.RemoveEventRequest;
 import com.epam.spring.core.soap.bean.event.SaveEventRequest;
-
-import generated.DomainObject;
-import generated.Event;
 
 
 /**
@@ -42,9 +36,6 @@ import generated.Event;
  */
 @XmlRegistry
 public class ObjectFactory {
-
-    private final static QName _Event_QNAME = new QName("", "event");
-    private final static QName _DomainObject_QNAME = new QName("", "domainObject");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: generated
@@ -67,14 +58,6 @@ public class ObjectFactory {
      */
     public GetEventsResponse createGetEventsResponse() {
         return new GetEventsResponse();
-    }
-
-    /**
-     * Create an instance of {@link Event }
-     * 
-     */
-    public Event createEvent() {
-        return new Event();
     }
 
     /**
@@ -102,14 +85,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DomainObject }
-     * 
-     */
-    public DomainObject createDomainObject() {
-        return new DomainObject();
-    }
-
-    /**
      * Create an instance of {@link GetEventByIdResponse }
      * 
      */
@@ -131,24 +106,6 @@ public class ObjectFactory {
      */
     public GetEventByNameResponse createGetEventByNameResponse() {
         return new GetEventByNameResponse();
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Event }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "event")
-    public JAXBElement<Event> createEvent(Event value) {
-        return new JAXBElement<Event>(_Event_QNAME, Event.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DomainObject }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "", name = "domainObject")
-    public JAXBElement<DomainObject> createDomainObject(DomainObject value) {
-        return new JAXBElement<DomainObject>(_DomainObject_QNAME, DomainObject.class, null, value);
     }
 
 }

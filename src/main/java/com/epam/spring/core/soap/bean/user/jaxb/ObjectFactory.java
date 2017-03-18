@@ -8,17 +8,14 @@
 
 package com.epam.spring.core.soap.bean.user.jaxb;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
-import com.epam.spring.core.soap.endpoints.bean.user.GetAllUsersRequest;
-import com.epam.spring.core.soap.endpoints.bean.user.GetAllUsersResponse;
-import com.epam.spring.core.soap.endpoints.bean.user.GetUserByEmailRequest;
-import com.epam.spring.core.soap.endpoints.bean.user.GetUserByIdRequest;
-import com.epam.spring.core.soap.endpoints.bean.user.RemoveUserRequest;
-import com.epam.spring.core.soap.endpoints.bean.user.SaveUserRequest;
+import com.epam.spring.core.soap.bean.user.GetAllUsersRequest;
+import com.epam.spring.core.soap.bean.user.GetAllUsersResponse;
+import com.epam.spring.core.soap.bean.user.GetUserByEmailRequest;
+import com.epam.spring.core.soap.bean.user.GetUserByIdRequest;
+import com.epam.spring.core.soap.bean.user.RemoveUserRequest;
+import com.epam.spring.core.soap.bean.user.SaveUserRequest;
 
 
 /**
@@ -37,9 +34,7 @@ import com.epam.spring.core.soap.endpoints.bean.user.SaveUserRequest;
  */
 @XmlRegistry
 public class ObjectFactory {
-
-    private final static QName _GetAllUsersRequest_QNAME = new QName("http://spring-course.com/schemas", "GetAllUsersRequest");
-
+	
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: generated
      * 
@@ -93,15 +88,6 @@ public class ObjectFactory {
      */
     public GetAllUsersRequest createGetAllUsersRequest() {
         return new GetAllUsersRequest();
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Object }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://spring-course.com/schemas", name = "GetAllUsersRequest")
-    public JAXBElement<Object> createGetAllUsersRequest(Object value) {
-        return new JAXBElement<Object>(_GetAllUsersRequest_QNAME, Object.class, null, value);
     }
 
 }

@@ -2,7 +2,6 @@ package com.epam.spring.core.service.impl;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;

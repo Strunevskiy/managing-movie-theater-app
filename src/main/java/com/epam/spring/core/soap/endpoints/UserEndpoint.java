@@ -21,7 +21,7 @@ import com.epam.spring.core.soap.bean.user.SaveUserRequest;
 public class UserEndpoint {
 
     private static final String NAMESPACE_URI = "http://spring-course.com/schemas";  
-    
+   
 	@Autowired
 	private IUserService userService;
 

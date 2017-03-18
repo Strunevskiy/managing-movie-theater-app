@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0"  
 		xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		xmlns="http://spring-course.com/schemas"
 		elementFormDefault="qualified"
 		targetNamespace="http://spring-course.com/schemas">
         
@@ -67,9 +68,15 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-
+	
+ <xs:complexType name="domainObject">
+   	<xs:sequence>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+   	</xs:sequence>
+  </xs:complexType>
+	
   <xs:element name="domainObject" type="domainObject"/>
-  <xs:element name="event" type="event"/>
+	
   <xs:complexType name="event">
     <xs:complexContent>
       <xs:extension base="domainObject">
@@ -91,11 +98,7 @@
     </xs:restriction>
   </xs:simpleType>
   
-  <xs:complexType name="domainObject">
-   	<xs:sequence>
-      <xs:element name="id" type="xs:long" minOccurs="0"/>
-   	</xs:sequence>
-  </xs:complexType>
+  <xs:element name="event" type="event"/>
   
 </xs:schema>
   

@@ -11,7 +11,7 @@ import org.springframework.ws.transport.http.MessageDispatcherServlet;
 
 import com.epam.spring.core.app.AppConfig;
 import com.epam.spring.core.app.configs.WebMvcConfig;
-import com.epam.spring.core.app.configs.WsConfig;
+import com.epam.spring.core.app.configs.soap.WsConfig;
 
 public class WebAppInitializer implements WebApplicationInitializer {
 

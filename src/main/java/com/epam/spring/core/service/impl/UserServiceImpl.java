@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.epam.spring.core.dao.repository.UserRepository;
-import com.epam.spring.core.domain.ticket.Ticket;
 import com.epam.spring.core.domain.user.Role;
 import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.IUserService;

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" 
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		xmlns="http://spring-course.com/schemas"
 		elementFormDefault="qualified"
-		xmlns:tns="http://spring-course.com/schemas"
         targetNamespace="http://spring-course.com/schemas">
-	
-  <xs:element name="domainObject" type="domain_object"/>
-  <xs:element name="user" type="user"/>
-  <xs:element name="user_account" type="userAccount"/>
   
   	<xs:element name="GetUserByEmailRequest">
 		<xs:complexType>
@@ -59,7 +55,7 @@
   
    <xs:complexType name="user">
     <xs:complexContent>
-      <xs:extension base="domainObjectt">
+      <xs:extension base="domainObject">
         <xs:sequence>
           <xs:element name="first_name" type="xs:string" minOccurs="0"/>
           <xs:element name="last_name" type="xs:string" minOccurs="0"/>
@@ -73,7 +69,7 @@
     </xs:complexContent>
   </xs:complexType>
   
-    <xs:complexType name="domain_object">
+    <xs:complexType name="domainObject">
    	<xs:sequence>
       <xs:element name="id" type="xs:long" minOccurs="0"/>
    	</xs:sequence>
@@ -95,5 +91,9 @@
       <xs:enumeration value="BOOKING_MANAGER"/>
     </xs:restriction>
   </xs:simpleType>
+  
+  <xs:element name="domainObject" type="domainObject"/>
+  <xs:element name="user" type="user"/>
+  <xs:element name="user_account" type="userAccount"/>
   
 </xs:schema>
