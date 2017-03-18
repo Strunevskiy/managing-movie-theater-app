@@ -1,4 +1,4 @@
-package com.epam.spring.core.service;
+package com.epam.spring.core.tests.integration.service;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -18,8 +18,8 @@ import org.testng.annotations.Test;
 
 import com.epam.spring.core.app.AppConfig;
 import com.epam.spring.core.domain.Auditorium;
-import com.epam.spring.core.domain.Event;
-import com.epam.spring.core.domain.EventRating;
+import com.epam.spring.core.domain.event.Event;
+import com.epam.spring.core.domain.event.EventRating;
 import com.epam.spring.core.service.IEventService;
 
 @ContextConfiguration(classes = { AppConfig.class }, loader = AnnotationConfigContextLoader.class)

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.epam.spring.core.dao.repository.EventRepository;
 import com.epam.spring.core.dao.statistics.ICounterAspectDao;
-import com.epam.spring.core.domain.Event;
+import com.epam.spring.core.domain.event.Event;
 import com.epam.spring.core.domain.statistics.CounterStatisticsEvent;
 import com.epam.spring.core.domain.ticket.Ticket;
 

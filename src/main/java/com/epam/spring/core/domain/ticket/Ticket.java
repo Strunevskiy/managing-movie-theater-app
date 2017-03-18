@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 
 import com.epam.spring.core.domain.Auditorium;
 import com.epam.spring.core.domain.DomainObject;
-import com.epam.spring.core.domain.Event;
+import com.epam.spring.core.domain.event.Event;
 import com.epam.spring.core.domain.user.User;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

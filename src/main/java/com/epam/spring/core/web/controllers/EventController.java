@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.epam.spring.core.domain.Event;
+import com.epam.spring.core.domain.event.Event;
 import com.epam.spring.core.service.IEventService;
 
 @Controller

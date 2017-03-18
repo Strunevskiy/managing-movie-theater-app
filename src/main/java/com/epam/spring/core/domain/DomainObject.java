@@ -7,13 +7,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.epam.spring.core.domain.event.Event;
+import com.epam.spring.core.domain.user.User;
 
 /**
  * @author alehstruneuski
  */
 @MappedSuperclass
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso({ UserAccount.class, User.class, Event.class })
 public class DomainObject implements Serializable {
 
 	/**
@@ -26,6 +37,7 @@ public class DomainObject implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
     @GenericGenerator(name= "increment", strategy= "increment")
 	@Column(name = "id", updatable = false, nullable = false)
+	@XmlElement
     private Long id;
 
     public Long getId() {

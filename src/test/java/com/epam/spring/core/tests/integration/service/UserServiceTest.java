@@ -1,4 +1,4 @@
-package com.epam.spring.core.service;
+package com.epam.spring.core.tests.integration.service;
 
 import java.util.Date;
 

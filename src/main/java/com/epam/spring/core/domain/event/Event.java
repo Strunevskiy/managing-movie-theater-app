@@ -1,4 +1,4 @@
-package com.epam.spring.core.domain;
+package com.epam.spring.core.domain.event;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -20,14 +20,29 @@ import javax.persistence.MapKeyTemporal;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.epam.spring.core.domain.Auditorium;
+import com.epam.spring.core.domain.DomainObject;
 import com.epam.spring.core.domain.ticket.Ticket;
+import com.epam.spring.core.domain.utils.jaxb.BigDecimalAdaptor;
 
 /**
  * @author alehstruneuski
  */
 @Entity
 @Table(name = "event")
+@XmlRootElement(name = "event")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "name", "basePrice", "rating", "ticketPrice" })
+@XmlSeeAlso(value = { EventRating.class })
 public class Event extends DomainObject {
 
     /**
@@ -36,12 +51,16 @@ public class Event extends DomainObject {
 	private static final long serialVersionUID = -6975358077943195597L;
 	
 	@Column(name = "name")
+	@XmlElement(name = "name") 
 	private String name;
+	
 	@Column(name = "base_price")
+	@XmlElement(name = "base_price") 
     private double basePrice;
 	
 	@Column(name = "rating")
 	@Enumerated(EnumType.STRING)
+    @XmlElement(name = "rating")
     private EventRating rating;
 	
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -51,12 +70,16 @@ public class Event extends DomainObject {
 			inverseJoinColumns = @JoinColumn(name = "auditorium_id"))
 	@MapKey(name = "date")    
 	@MapKeyTemporal(TemporalType.TIMESTAMP)
+	@XmlTransient
 	private Map<Date, Auditorium> auditoriums = new HashMap<>();
     
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+	@XmlTransient
 	private Set<Ticket> tickets = new HashSet<>();
 	
 	@Column(name = "ticket_price", precision = 19, scale = 0)
+	@XmlElement(name = "ticket_price") 
+	@XmlJavaTypeAdapter(BigDecimalAdaptor.class)
 	private BigDecimal ticketPrice;
 
 	public void assignAuditorium(Date dateTime, Auditorium auditorium) {

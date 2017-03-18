@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,8 +33,7 @@ public class UserController {
 			users = Arrays.asList(user);
 		} else {
 			users = userService.getAll();
-		}
-		
+		}		
 		ModelAndView usersView = new ModelAndView(USERS_VIEW);
 		usersView.addObject("entity", "user");
 		usersView.addObject("users", users);
@@ -41,7 +41,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ModelAndView getUserById(@RequestParam long id) {
+	public ModelAndView getUserById(@PathVariable long id) {
 		User user = userService.getById(id);
 		
 		ModelAndView usersView = new ModelAndView(USERS_VIEW);
@@ -63,8 +63,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView saveUser(@RequestBody User auditoriumToSave) {
-		userService.save(auditoriumToSave);
+	public ModelAndView saveUser(@RequestBody User userToSave) {
+		userService.save(userToSave);
 		
 		ModelAndView actionView = new ModelAndView(USER_ACTION_VIEW);
 		actionView.addObject("entity", "user");

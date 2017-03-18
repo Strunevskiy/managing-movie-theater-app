@@ -7,9 +7,11 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.ws.transport.http.MessageDispatcherServlet;
 
 import com.epam.spring.core.app.AppConfig;
-import com.epam.spring.core.app.configs.WebConfig;
+import com.epam.spring.core.app.configs.WebMvcConfig;
+import com.epam.spring.core.app.configs.WsConfig;
 
 public class WebAppInitializer implements WebApplicationInitializer {
 
@@ -17,15 +19,26 @@ public class WebAppInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext container) {     
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(AppConfig.class);
-        
+    	
         container.addListener(new ContextLoaderListener(rootContext));
+        
+        AnnotationConfigWebApplicationContext dispatcherContextSoap = new AnnotationConfigWebApplicationContext(); 
+    	dispatcherContextSoap.register(WsConfig.class);
+         
+     	MessageDispatcherServlet dispatcherServletSoap = new MessageDispatcherServlet(dispatcherContextSoap);
+     	dispatcherServletSoap.setApplicationContext(rootContext);
+     	dispatcherServletSoap.setTransformWsdlLocations(true);
+ 		ServletRegistration.Dynamic dispatcherSoap = container.addServlet("dispatcher_soap", dispatcherServletSoap);
+ 		dispatcherSoap.setLoadOnStartup(1);
+ 		dispatcherSoap.addMapping("/soap/*");
 
-        AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-        dispatcherContext.register(WebConfig.class);
+ 		
+        AnnotationConfigWebApplicationContext dispatcherContextRest = new AnnotationConfigWebApplicationContext();
+        dispatcherContextRest.register(WebMvcConfig.class);
 
-        ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
-        dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/");
+        ServletRegistration.Dynamic dispatcherRest = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContextRest));
+        dispatcherRest.setLoadOnStartup(1);
+        dispatcherRest.addMapping("/rest/*");
     }
 
 }

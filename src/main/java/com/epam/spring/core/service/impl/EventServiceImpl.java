@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epam.spring.core.dao.repository.EventRepository;
-import com.epam.spring.core.domain.Event;
+import com.epam.spring.core.domain.event.Event;
 import com.epam.spring.core.service.IEventService;
 
 /**

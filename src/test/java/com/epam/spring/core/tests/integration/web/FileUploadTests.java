@@ -1,4 +1,4 @@
-package com.epam.spring.core.web;
+package com.epam.spring.core.tests.integration.web;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +15,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.epam.spring.core.app.AppConfig;
-import com.epam.spring.core.app.configs.WebConfig;
+import com.epam.spring.core.app.configs.WebMvcConfig;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.io.IOException;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = { AppConfig.class, WebConfig.class })
+@ContextConfiguration(classes = { AppConfig.class, WebMvcConfig.class })
 public class FileUploadTests extends AbstractTestNGSpringContextTests {
 	
 	private static final String PATH_FILE_UPLOAD = "/upload/files/usersEvents";

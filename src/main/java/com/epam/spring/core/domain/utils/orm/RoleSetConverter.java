@@ -1,4 +1,4 @@
-package com.epam.spring.core.domain.user;
+package com.epam.spring.core.domain.utils.orm;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +9,8 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 import org.apache.commons.lang.StringUtils;
+
+import com.epam.spring.core.domain.user.Role;
 
 @Converter(autoApply = true)
 public class RoleSetConverter implements AttributeConverter<Set<Role>, String> {	

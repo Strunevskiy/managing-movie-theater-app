@@ -37,9 +37,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+        .antMatchers("/soap/**").permitAll()
         .antMatchers("/static/**").permitAll()
-        .antMatchers("/ticket/**").permitAll()//hasRole("BOOKING_MANAGER")
-        .antMatchers("/upload/**").permitAll()
+        .antMatchers("/ticket/**").hasRole("BOOKING_MANAGER")
         .antMatchers("/**").hasAnyRole("BOOKING_MANAGER", "RESGISTERED_USER")
         .anyRequest().authenticated().and()
         .formLogin().permitAll()
@@ -52,8 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .logout().permitAll()   
         .logoutUrl("/perform_logout")
 		.deleteCookies(AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY, "JSESSIONID")
-		.invalidateHttpSession(true).and()
-        .csrf().disable()
+		.invalidateHttpSession(true)
+        .and().csrf().disable()
         .exceptionHandling().accessDeniedPage("/access_denied");
     }
  

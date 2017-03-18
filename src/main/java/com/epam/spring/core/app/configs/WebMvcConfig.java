@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -19,8 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @EnableWebMvc
 @Configuration
+@Import({ SecurityConfiguration.class })
 @ComponentScan(basePackages = {"com.epam.spring.core.web", "com.epam.spring.core.web.exception"})
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	  
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

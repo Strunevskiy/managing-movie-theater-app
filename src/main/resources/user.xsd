@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" 
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		elementFormDefault="qualified"
+		xmlns:tns="http://spring-course.com/schemas"
+        targetNamespace="http://spring-course.com/schemas">
+	
+  <xs:element name="domainObject" type="domain_object"/>
+  <xs:element name="user" type="user"/>
+  <xs:element name="user_account" type="userAccount"/>
+  
+  	<xs:element name="GetUserByEmailRequest">
+		<xs:complexType>
+			<xs:sequence>
+			     <xs:element name="email" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="GetAllUsersRequest">
+		<xs:complexType>
+			<xs:sequence>
+			     <xs:element name="numberOfUsers" type="xs:int" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="GetUserByIdRequest">
+		<xs:complexType>
+			<xs:sequence>
+      			<xs:element name="id" type="xs:long" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="RemoveUserRequest">
+		<xs:complexType>
+			<xs:sequence>
+			     <xs:element ref="user" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="SaveUserRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="user" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="GetAllUsersResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="user" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+  
+   <xs:complexType name="user">
+    <xs:complexContent>
+      <xs:extension base="domainObjectt">
+        <xs:sequence>
+          <xs:element name="first_name" type="xs:string" minOccurs="0"/>
+          <xs:element name="last_name" type="xs:string" minOccurs="0"/>
+          <xs:element name="email" type="xs:string" minOccurs="0"/>
+          <xs:element name="password" type="xs:string" minOccurs="0"/>
+          <xs:element name="birthday" type="xs:string" minOccurs="0"/>
+          <xs:element name="role" type="role" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="user_account" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+    <xs:complexType name="domain_object">
+   	<xs:sequence>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+   	</xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="userAccount">
+    <xs:complexContent>
+      <xs:extension base="domainObject">
+        <xs:sequence>
+          <xs:element name="money_amount" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="role">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RESGISTERED_USER"/>
+      <xs:enumeration value="BOOKING_MANAGER"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>

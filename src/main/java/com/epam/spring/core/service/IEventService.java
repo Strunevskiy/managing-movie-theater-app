@@ -3,7 +3,7 @@ package com.epam.spring.core.service;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.epam.spring.core.domain.Event;
+import com.epam.spring.core.domain.event.Event;
 
 /**
  * @author alehstruneuski
