@@ -12,7 +12,7 @@
             <div class="login-container">
                 <div class="login-card">
                     <div class="login-form">
-                        <form action="/login" method="post" class="form-horizontal">
+                        <form action="/perform_login" method="post" class="form-horizontal">
                         
                         <#if RequestParameters.error??>
                           <div class="alert alert-danger">
