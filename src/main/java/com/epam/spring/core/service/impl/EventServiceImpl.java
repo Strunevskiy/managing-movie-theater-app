@@ -48,5 +48,10 @@ public class EventServiceImpl implements IEventService {
 	public Event getByName(String name) {
 		return eventRepository.findByName(name);
 	}
+	
+	@Override
+	public boolean exists(Event event) {
+		return eventRepository.exists(event.getId());
+	}
 
 }

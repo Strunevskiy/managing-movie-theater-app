@@ -43,7 +43,7 @@ public abstract class AbstractITextPdfView extends AbstractView {
         document.open();
         buildPdfDocument(model, document, writer, request, response);
         document.close();
- 
+        
         // Flush to HTTP response.
         writeToResponse(response, baos);
     }

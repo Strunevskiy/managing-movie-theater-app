@@ -19,6 +19,8 @@ public interface IEventService extends IAbstractDomainObjectService<Event> {
      */
     public @Nullable Event getByName(@Nonnull String name);
 
+    public boolean exists(@Nonnull Event event);
+
     /*
      * Finding all events that air on specified date range
      * 

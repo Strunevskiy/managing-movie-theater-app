@@ -61,5 +61,10 @@ public class UserServiceImpl implements IUserService {
 	public void updateUser(User user) {
 		userRepository.save(user);
 	}
+
+	@Override
+	public boolean exists(User user) {		
+		return userRepository.exists(user.getId());
+	}
 	
 }

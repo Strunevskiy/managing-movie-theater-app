@@ -27,7 +27,7 @@ public class TicketsPdfView extends AbstractITextPdfView {
 	{
         @SuppressWarnings("unchecked")
 		Set<Ticket> tickets = (Set<Ticket>) model.get(PASSED_TICKETS);
-         
+        
         document.add(new Paragraph("Tickets"));
          
         PdfPTable table = new PdfPTable(3);

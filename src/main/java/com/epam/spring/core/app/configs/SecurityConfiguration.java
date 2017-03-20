@@ -37,9 +37,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-        .antMatchers("/static/**").permitAll()
-        .antMatchers("/ticket/**").hasRole("BOOKING_MANAGER")
-        .antMatchers("/**").hasAnyRole("BOOKING_MANAGER", "RESGISTERED_USER")
+        .antMatchers("/**").permitAll()
+        //.antMatchers("/static/**").permitAll()
+        //.antMatchers("/ticket/**").hasRole("BOOKING_MANAGER")
+        //.antMatchers("/**").hasAnyRole("BOOKING_MANAGER", "RESGISTERED_USER")
         .anyRequest().authenticated().and()
         .formLogin().permitAll()
         .loginPage("/login")

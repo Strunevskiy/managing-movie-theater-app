@@ -4,72 +4,71 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.epam.spring.core.domain.user.User;
 import com.epam.spring.core.service.IUserService;
+import com.epam.spring.core.web.exception.ConflictException;
+import com.epam.spring.core.web.exception.NotFoundException;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
-
-	private static final String USERS_VIEW = "user/user_view";
-	private static final String USER_ACTION_VIEW = "action_view";
 
 	@Autowired
 	private IUserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView getUserByEmail(@RequestParam(required = false) String email) {
-		Collection<User> users;
+	public Collection<User> getUserByEmail(@RequestParam(required = false) String email) {
+		Collection<User> users = null;
 		if (null != email) {
 			User user = userService.getUserByEmail(email);
 			users = Arrays.asList(user);
 		} else {
 			users = userService.getAll();
-		}		
-		ModelAndView usersView = new ModelAndView(USERS_VIEW);
-		usersView.addObject("entity", "user");
-		usersView.addObject("users", users);
-		return usersView;
+		}
+		if (users == null) {
+			throw new NotFoundException();
+		}
+		return users;
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ModelAndView getUserById(@PathVariable long id) {
+	public User getUserById(@PathVariable long id) {
 		User user = userService.getById(id);
-		
-		ModelAndView usersView = new ModelAndView(USERS_VIEW);
-		usersView.addObject("entity", "user");
-		usersView.addObject("users", Arrays.asList(user));
-		return usersView;
+		return user;
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public ModelAndView removeUser(@RequestParam long id) {
+	public ResponseEntity<String> removeUser(@RequestParam long id) {
 		User userToDelete = new User();
 		userToDelete.setId(id);
+		if (!userService.exists(userToDelete)) {
+			throw new NotFoundException();
+		}
 		userService.remove(userToDelete);
-		
-		ModelAndView actionView = new ModelAndView(USER_ACTION_VIEW);
-		actionView.addObject("entity", "user");
-		actionView.addObject("action", "removing");
-		return actionView;
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView saveUser(@RequestBody User userToSave) {
-		userService.save(userToSave);
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<String> saveUser(@RequestBody User userToSave) {
+		if (userService.exists(userToSave)) {
+			throw new ConflictException();
+		}
+		User user = userService.save(userToSave);
 		
-		ModelAndView actionView = new ModelAndView(USER_ACTION_VIEW);
-		actionView.addObject("entity", "user");
-		actionView.addObject("action", "persisting");
-		return actionView;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Location", String.format("/user/%s", user.getId()));
+		
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
 	}
 	
 }
